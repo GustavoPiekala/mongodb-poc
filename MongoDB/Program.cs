@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MongoDB.Driver;
 
 namespace MongoDB
 {
@@ -13,6 +8,10 @@ namespace MongoDB
     {
         public static void Main(string[] args)
         {
+            var client = new MongoClient("mongodb://admin:admin@localhost:27017/admin");
+
+            var database = client.GetDatabase("admin");
+
             CreateHostBuilder(args).Build().Run();
         }
 
