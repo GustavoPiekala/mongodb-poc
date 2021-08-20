@@ -24,7 +24,7 @@ namespace MongoDB.Controllers
         }
 
         [HttpPost]
-        public void InsertBatchData()
+        public void SalvarNotasFiscaisFaker()
         {
             var faker = new Faker<NotaFiscal>()
                 .RuleFor(x => x.Numero, x => x.Random.Int(100000, 999999))
@@ -39,7 +39,7 @@ namespace MongoDB.Controllers
 
         [HttpGet]
         [Route("Count")]
-        public long GetCount()
+        public long GetContagem()
         {
             return notaFiscalRepository.Quantidade();
         }
