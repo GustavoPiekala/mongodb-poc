@@ -1,4 +1,5 @@
-﻿using MongoDB.Collections;
+﻿using MongoDB.Bson;
+using MongoDB.Collections;
 using MongoDB.Core;
 using MongoDB.Driver;
 using System;
@@ -27,8 +28,20 @@ namespace MongoDB.Repository
 
         public NotaFiscal ObterPorId(Guid id)
         {
-            //return Collection.AsQueryable().Where(x => x.Id == id.ToString()).FirstOrDefault();
             return Collection.Find(x => x.Id == id.ToString()).FirstOrDefault();
+        }
+
+        public NotaFiscal ObterPorChave(int numero, string cnpj)
+        {
+            var builder = Builders<NotaFiscal>.Filter;
+            var filter = builder.And(builder.Eq("Numero", numero), builder.Eq("Cnpj", cnpj));
+            return Collection.Find(filter).FirstOrDefault();
+        }
+
+        public IEnumerable<NotaFiscal> ListarPorNumeros(int[] numeros)
+        {
+            var filter = Builders<NotaFiscal>.Filter.In("Numero", numeros);
+            return Collection.Find(filter).ToList();
         }
 
         public bool Deletar(Guid id)

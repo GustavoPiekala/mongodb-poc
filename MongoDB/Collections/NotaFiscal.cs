@@ -1,4 +1,5 @@
-﻿using MongoDB.Core;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Core;
 using System;
 
 namespace MongoDB.Collections
@@ -8,6 +9,7 @@ namespace MongoDB.Collections
         public int Numero { get; set; }
         public string Cnpj { get; set; }
         public DateTime DataEmissao { get; set; }
+
         public NotaFiscal()
         {
         }

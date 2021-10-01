@@ -12,14 +12,12 @@ namespace MongoDB.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MongoController : ControllerBase
+    public class NotaFiscalController : ControllerBase
     {
-        private readonly ILogger<MongoController> _logger;
         private readonly NotaFiscalRepository notaFiscalRepository;
 
-        public MongoController(ILogger<MongoController> logger)
+        public NotaFiscalController()
         {
-            _logger = logger;
             notaFiscalRepository = new NotaFiscalRepository();
         }
 
@@ -45,7 +43,7 @@ namespace MongoDB.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<NotaFiscal>> GetNotasFiscais()
+        public async Task<IEnumerable<NotaFiscal>> GetAll()
         {
             return await notaFiscalRepository.ListarTodas();
         }
@@ -55,6 +53,20 @@ namespace MongoDB.Controllers
         public NotaFiscal GetPorId(Guid id)
         {
             return notaFiscalRepository.ObterPorId(id);
+        }
+
+        [HttpGet]
+        [Route("PorNumeros")]
+        public IEnumerable<NotaFiscal> GetPorNumeros([FromQuery] int[] numeros)
+        {
+            return notaFiscalRepository.ListarPorNumeros(numeros);
+        }
+
+        [HttpGet]
+        [Route("PorChave")]
+        public NotaFiscal GetPorChave(int numero, string cnpj)
+        {
+            return notaFiscalRepository.ObterPorChave(numero, cnpj);
         }
 
         [HttpDelete]
